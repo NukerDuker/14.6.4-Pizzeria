@@ -18,8 +18,6 @@ public class Pizzeria {
     public void order(String pizzaName) {
         if (System.currentTimeMillis() < end) {
             clients.add(new Client(System.currentTimeMillis(), pizzaName));
-        } else {
-            System.out.println("We are closed, dude");
         }
     }
 
@@ -47,13 +45,13 @@ public class Pizzeria {
 
         private void cook(Client client) {
             checkTime = System.currentTimeMillis() - client.getStartTime();
-            System.out.println(client.getPizzaName() + " CheckTime :" + checkTime);
+            //System.out.println(client.getPizzaName() + " CheckTime :" + checkTime);
             if (checkTime > 249) {
-                System.out.println(Thread.currentThread().getId() + " " + client.getPizzaName() + " is NOT delivered (");
+                System.out.println(client.getPizzaName() + " is NOT delivered (");
             } else {
                 try {
                     sleep(500);
-                    System.out.println(Thread.currentThread().getId() + " " + client.getPizzaName() + " is delivered");
+                    System.out.println(client.getPizzaName() + " is delivered");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
