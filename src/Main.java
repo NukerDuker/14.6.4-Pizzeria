@@ -1,7 +1,7 @@
 public class Main {
 
 
-    public static void main(String[] args) throws InterruptedException{
+    public static void main(String[] args) throws InterruptedException {
 
         Pizzeria pizzeria = new Pizzeria();
         pizzeria.order("Margarita");
@@ -11,7 +11,6 @@ public class Main {
         pizzeria.order("Sicilian");
         Thread.sleep(100);
         pizzeria.order("Greek");
-
     }
 
 }

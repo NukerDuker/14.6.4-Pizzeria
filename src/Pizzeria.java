@@ -1,9 +1,9 @@
+import java.util.Map;
 import java.util.concurrent.*;
 
 public class Pizzeria {
 
     private ConcurrentLinkedQueue<Client> clients = new ConcurrentLinkedQueue<>();
-    private Object lock = new Object();
     private boolean workTime;
     private long start;
     private long end;
@@ -23,30 +23,33 @@ public class Pizzeria {
         }
     }
 
-    class Wagon extends Thread{
+    class Wagon extends Thread {
 
         long checkTime;
 
         Wagon(String name) {
             super(name);
         }
+
         public void run() {
             while (System.currentTimeMillis() < end) {
                 if (clients.size() > 0) {
-                    cook(clients.poll());
+                    if (clients.peek() != null) {
+                        cook(clients.poll());
+                    }
                 }
             }
         }
 
-        private void cook(Client client) throws NullPointerException{
+        private void cook(Client client) {
             checkTime = System.currentTimeMillis() - client.getStartTime();
-
-            if (checkTime >= 250) {
-                System.out.println(client.getPizzaName() + " is NOT delivered");
+            System.out.println(client.getPizzaName() + " CheckTime :" + checkTime);
+            if (checkTime > 249) {
+                System.out.println(Thread.currentThread().getId() + " " + client.getPizzaName() + " is NOT delivered (");
             } else {
                 try {
                     sleep(500);
-                    System.out.println(client.getPizzaName() + " is delivered");
+                    System.out.println(Thread.currentThread().getId() + " " + client.getPizzaName() + " is delivered");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
