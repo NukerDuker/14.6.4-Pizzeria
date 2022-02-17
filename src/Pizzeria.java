@@ -34,8 +34,12 @@ public class Pizzeria {
         public void run() {
             while (System.currentTimeMillis() < end) {
                 if (clients.size() > 0) {
-                    if (clients.peek() != null) {
-                        cook(clients.poll());
+                    try {
+                        if (clients.peek() != null) {
+                            cook(clients.poll());
+                        }
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
                     }
                 }
             }
